@@ -1,6 +1,13 @@
 <template>
   <BaseContainer>
-    <component :is="currentComponent" :exercise="exercise" @next="goToNextExercise" />
+    <component
+      :is="currentComponent"
+      :exercise="exercise"
+      :current="currentIndex"
+      :total="exercises.length"
+      @next="goToNextExercise"
+      @skip="goToNextExercise"
+    />
   </BaseContainer>
 </template>
 
@@ -19,14 +26,19 @@ const exercises = [
     type: "image-selection",
     question: 'Select "Bus"',
     options: [
-      { label: "Bus", image: "/bus.jpg", correct: true },
+      { label: "Bus", image: "/bus.png", correct: true },
       { label: "Car", image: "/car.png", correct: false },
-      { label: "Train", image: "/train.jpg", correct: false },
-      { label: "Bike", image: "/bike.jpg", correct: false },
+      { label: "Train", image: "/train.png", correct: false },
+      { label: "Bike", image: "/bike.png", correct: false },
     ],
   },
   // Add more exercises here
 ];
+
+const currentIndex = computed(() => {
+  const id = Number(route.params.id);
+  return exercises.findIndex((e) => e.id === id);
+});
 
 // Find current exercise based on route param
 const exercise = computed(() => {

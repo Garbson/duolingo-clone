@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="d-flex justify-content-between align-items-center mb-1">
-      <small>{{ label }}</small>
-      <small>{{ value }}/{{ max }}</small>
+      <small>{{ props.label }}</small>
+      <small>{{ props.value }}/{{ props.max }}</small>
     </div>
     <div
       class="progress"
       role="progressbar"
-      :aria-valuenow="value"
+      :aria-valuenow="props.value"
       :aria-valuemin="0"
-      :aria-valuemax="max"
+      :aria-valuemax="props.max"
     >
       <div class="progress-bar bg-primary" :style="{ width: percent + '%' }"></div>
     </div>
@@ -17,11 +17,22 @@
 </template>
 
 <script setup>
-defineProps({
-  value: Number,
-  max: Number,
-  label: { type: String, default: "Progress" },
+import { computed } from "vue";
+
+const props = defineProps({
+  value: {
+    type: Number,
+    required: true,
+  },
+  max: {
+    type: Number,
+    required: true,
+  },
+  label: {
+    type: String,
+    default: "Progress",
+  },
 });
 
-const percent = computed(() => Math.min(100, (value / max) * 100));
+const percent = computed(() => Math.min(100, (props.value / props.max) * 100));
 </script>
