@@ -1,6 +1,5 @@
 <template>
-  <BaseContainer class="pb-5">
-    <!-- Header -->
+  <div class="pb-5 container position-relative">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <div style="width: 100%">
         <div class="d-flex justify-content-between mb-1">
@@ -13,13 +12,11 @@
       </div>
     </div>
 
-    <!-- Question and Options Centered -->
+    <!-- Vertically centered answer area -->
     <div class="d-flex flex-column justify-content-center" style="min-height: 60vh">
-      <!-- Question -->
       <h4 class="fw-semibold fs-5 mb-4 text-start w-100">{{ exercise.question }}</h4>
 
-      <!-- Options -->
-      <div class="row g-3">
+      <div class="row g-3 justify-content-center">
         <div
           class="col-6 col-md-3"
           v-for="(option, index) in exercise.options"
@@ -31,18 +28,12 @@
             :incorrect="answerChecked && selected === index && !option.correct"
             @click="selectOption(index)"
           >
-            <img
-              :src="option.image"
-              :alt="option.label"
-              class="img-fluid mb-2 imgQuestions"
-            />
-            <div class="text-center">{{ option.label }}</div>
+            <div class="text-center fs-5 fw-semibold py-3">{{ option.label }}</div>
           </BaseCard>
         </div>
       </div>
     </div>
 
-    <!-- Feedback block with transition -->
     <transition name="slide-up">
       <div
         v-if="answerChecked"
@@ -57,7 +48,6 @@
       </div>
     </transition>
 
-    <!-- Default check button -->
     <div
       v-if="!answerChecked"
       class="fixed-bottom py-3"
@@ -66,7 +56,7 @@
       <div class="container px-4">
         <BaseButton
           variant="primary"
-          class="w-100"
+          class="w-100 rounded-xl"
           :disabled="selected === null"
           @click="checkAnswer"
         >
@@ -74,7 +64,7 @@
         </BaseButton>
       </div>
     </div>
-  </BaseContainer>
+  </div>
 </template>
 
 <script setup>
@@ -112,18 +102,6 @@ const checkAnswer = () => {
 </script>
 
 <style scoped>
-.imgQuestions {
-  height: 120px;
-  object-fit: contain;
-  width: 100%;
-}
-
-@media (max-width: 576px) {
-  .imgQuestions {
-    height: 100px;
-  }
-}
-
 .feedback-footer {
   position: fixed;
   bottom: 0;

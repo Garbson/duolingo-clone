@@ -9,6 +9,7 @@
     :type="type"
     :disabled="disabled"
     @click="$emit('click')"
+    class="rounded-4"
   >
     <slot />
   </button>
